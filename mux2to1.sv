@@ -21,10 +21,10 @@
 
 
 module mux2to1( //Ports declaration inside the brackets.
-    logic A,
-    logic B,
-    logic sel,
-    output Y
+    input logic A,
+    input logic B,
+    input logic sel,
+    output logic Y
     );  //  Don't forget semi-colon
     
     assign Y = (sel == 1'b0)? A : B;
