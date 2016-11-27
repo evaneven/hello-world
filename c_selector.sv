@@ -28,47 +28,40 @@ module c_selector(
     
     wire net1;
     wire net2;
-    wire net3;
     
-    wire comp_opsel0;
+    wire comp_opsel2;
     wire comp_mode;
     
-    mux2to1 OneLevel2(
+    complementer comp_two(
+        .A(opsel[2]),
+        .Y(comp_opsel2)
+    );
+    
+    complementer comp_Mode(
+        .A(mode),
+        .Y(comp_mode)
+    );
+    
+    mux2to1 OneLevel1(
         .A(opsel[1]),
         .B(opsel[0]),
         .sel(opsel[1]),
         .Y(net1)
     );
     
-    complementer comp_one(
-        .A(opsel[0]),
-        .Y(comp_opsel0)
-    );
-    
-    mux2to1 TwoLevel2(
-        .A(comp_opsel0),
-        .B(opsel[1]),
-        .sel(opsel[1]),
+    mux2to1 OneLevel2(
+        .A(net1),
+        .B(comp_opsel2),
+        .sel(opsel[2]),
         .Y(net2)
     );
     
     mux2to1 OneLevel3(
-        .A(net1),
-        .B(net2),
-        .sel(opsel[2]),
-        .Y(net3)
-    );
-    
-    complementer comp_two(
-        .A(mode),
-        .Y(comp_mode)
-    );
-    
-    mux2to1 OneLevel4(
-        .A(net3),
+        .A(net2),
         .B(comp_mode),
         .sel(mode),
         .Y(Cin_initial)
     );
+
     
 endmodule
