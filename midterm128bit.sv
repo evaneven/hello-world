@@ -33,7 +33,8 @@ module midterm128bit(
     );
     
     logic Cin_initial;
-    logic [127:0]Cin_final;
+    logic [128:0]Cin_final;
+    logic very_last_Cout;
     
     c_selector InitialC(
         .opsel(opsel),
@@ -50,7 +51,19 @@ module midterm128bit(
         end
     endgenerate
     
-    //assign last_bit_carry = Cin_final[127];
-    //assign Cout_test = Cin_final[127];
+    assign very_last_Cout = Cin_final[128];
+    
+    flag_selector flagSel(
+        .op1(op1),
+        .op2(op2),
+        .opsel(opsel),
+        .mode(mode),
+        .Cout(very_last_Cout),
+        .result(result),
+        .c_flag(c_flag),
+        .z_flag(z_flag),
+        .o_flag(o_flag),
+        .s_flag(s_flag)
+    );
     
 endmodule
